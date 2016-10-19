@@ -13,11 +13,13 @@ def get_view(request,*args,**kwargs):
         "seasonlist": ["spring", "summer", "autumn", "winter"],
         'ip_address': request.META['REMOTE_ADDR'],
     })
-    print request.COOKIES["test"]
+    print request.session['foo']
+    request.session['foo'] = 'bar'
+    # print request.COOKIES["test"]
     # seasonlist=["spring", "summer", "autumn", "winter"]
     # return HttpResponse(json.dumps(seasonlist))
     response= HttpResponse(t.render(c))
-    response.set_cookie("test","test")
+    # response.set_cookie("test","test")
     return response
 
 def hello(request,*args,**kwargs):

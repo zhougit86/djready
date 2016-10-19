@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+{% block title %}
+Temp
+{% endblock %}
+
+
+{% block content %}
+<p>the time is {{time}}</p>
+<ol>
+    {% for s in seasonlist %}
+    <li>It's {{s}}</li>
+    {% endfor %}
+</ol>
+you are from {{ip_address}}
+
+
+<div>
+    {% load static %}
+    <img src="{% static "images/hi.jpg" %}" />
+</div>
+
+
+{% endblock %}

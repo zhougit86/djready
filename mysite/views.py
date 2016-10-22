@@ -3,6 +3,11 @@ from django.template import loader,Context
 import datetime
 import json
 
+def network(request):
+    test={"aaa":1,"bbb":2,"ccc":3}
+    if request.method == "GET":
+        return HttpResponse(json.dumps(test))
+
 def get_view(request,*args,**kwargs):
     temp=kwargs.pop("temp")
     offset=kwargs.pop("offset")

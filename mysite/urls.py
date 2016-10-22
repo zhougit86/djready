@@ -19,7 +19,7 @@ from mysite import views
 
 
 urlpatterns = [
-
+    url(r'^network/$',views.network),
     url(r'^admin/', admin.site.urls),
     url(r'^hello/(?P<offset>\d?)/$',views.hello,{"temp":"temp.html","GET":views.get_view}),
     url(r'record/',include('records.urls'))

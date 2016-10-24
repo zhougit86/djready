@@ -1,3 +1,4 @@
+from django.test import LiveServerTestCase
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 import unittest
@@ -5,7 +6,7 @@ import time
 # chromedriver = "D:/Program Files (x86)/Mozilla Firefox/firefox.exe"
 
 
-class NewTest(unittest.TestCase):
+class NewTest(LiveServerTestCase):
 
     def setUp(self):
         self.browser=webdriver.Firefox(firefox_binary="D:/Program Files (x86)/Mozilla Firefox/firefox.exe")
@@ -20,7 +21,7 @@ class NewTest(unittest.TestCase):
         self.assertIn(row_text, [row.text for row in rows])
 
     def testthiscase(self):
-        self.browser.get("http://localhost:8000")
+        self.browser.get(self.live_server_url)
         self.assertIn('To-Do',self.browser.title)
         header_text=self.browser.find_element_by_tag_name('h1').text
         self.assertIn('To-Do',header_text)
@@ -43,5 +44,5 @@ class NewTest(unittest.TestCase):
 
         self.fail('Finish')
 
-if __name__=='__main__':
-    unittest.main()
+# if __name__=='__main__':
+#     unittest.main()

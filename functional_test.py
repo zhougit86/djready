@@ -14,6 +14,11 @@ class NewTest(unittest.TestCase):
     def tearDown(self):
         self.browser.quit()
 
+    def check_for_row_in_list_table(self,row_text):
+        table = self.browser.find_element_by_id('id_list_table')
+        rows = table.find_elements_by_tag_name('tr')
+        self.assertIn(row_text, [row.text for row in rows])
+
     def testthiscase(self):
         self.browser.get("http://localhost:8000")
         self.assertIn('To-Do',self.browser.title)
@@ -29,14 +34,12 @@ class NewTest(unittest.TestCase):
         inputbox.send_keys('Buy peacock feathers')
         inputbox.send_keys(Keys.ENTER)
         time.sleep(2)
-        table=self.browser.find_element_by_id('id_list_table')
-        rows=table.find_elements_by_tag_name('tr')
+
+        self.check_for_row_in_list_table('1:Buy peacock feathers')
         # self.assertTrue(
         #     any(row.text=='1: Buy peacock feathers' for row in rows),
         #     "the table text is %s" % table.text
         # )
-        self.assertIn('1:Buy peacock feathers', [row.text for row in rows])
-
 
         self.fail('Finish')
 

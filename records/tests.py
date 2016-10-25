@@ -49,15 +49,15 @@ class HomePageTest(TestCase):
         self.assertEqual(first_saved_item.text, 'The first (ever) list item')
         self.assertEqual(second_saved_item.text, 'Item the second')
 
-    def test_home_page_displays_all(self):
-        Item.objects.create(text='item1')
-        Item.objects.create(text='item2')
-
-        request=HttpRequest()
-        response=home_page(request)
-
-        self.assertIn('item1',response.content.decode())
-        self.assertIn('item2', response.content.decode())
+    # def test_home_page_displays_all(self):
+    #     Item.objects.create(text='item1')
+    #     Item.objects.create(text='item2')
+    #
+    #     request=HttpRequest()
+    #     response=home_page(request)
+    #
+    #     self.assertIn('item1',response.content.decode())
+    #     self.assertIn('item2', response.content.decode())
 
 class ListViewTest(TestCase):
     def test_display_all_items(self):
@@ -67,6 +67,10 @@ class ListViewTest(TestCase):
         response = self.client.get('/lists/the-only-list/')
         self.assertContains(response, 'item1')
         self.assertContains(response, 'item2')
+
+    def test_use_list_template(self):
+        response=self.client.get('/lists/the-only-list/')
+        self.assertTemplateUsed(response,'list.html')
 
 
 # Create your tests here.

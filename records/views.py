@@ -16,15 +16,19 @@ def home_page(request):
     #     'new_item_text': new_item_text,
     # })
 
-    if request.method == 'POST':
-        Item.objects.create(text=request.POST['item_text'])
-        return redirect('/lists/the-only-list/')
+    # if request.method == 'POST':
+    #     Item.objects.create(text=request.POST['item_text'])
+    #     return redirect('/lists/the-only-list/')
 
     return render(request, 'home.html')
 
 def view_list(request):
     items=Item.objects.all()
     return render(request,'list.html',{'items':items})
+
+def new_list(request):
+    Item.objects.create(text=request.POST['item_text'])
+    return redirect('/lists/the-only-list/')
 
 
 def hello(request):

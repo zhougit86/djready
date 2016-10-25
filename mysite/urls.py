@@ -21,6 +21,7 @@ from records import views as recviews
 
 urlpatterns = [
     url(r'^$',recviews.home_page,name='home'),
+    url(r'^lists/the-only-list/',recviews.view_list,name='view_list'),
     url(r'^admin/', admin.site.urls),
     # url(r'^hello/(?P<offset>\d?)/$',views.hello,{"temp":"temp.html","GET":views.get_view}),
     # url(r'record/',include('records.urls')),

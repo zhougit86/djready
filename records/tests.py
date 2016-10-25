@@ -32,7 +32,7 @@ class HomePageTest(TestCase):
         self.assertEqual(new_item.text, 'A new list item')
 
         self.assertEqual(response.status_code,302)
-        self.assertEqual(response['location'],'/')
+        self.assertEqual(response['location'],'/lists/the-only-list/')
 
     def test_saving_and_retrieving_items(self):
         first_item = Item()
@@ -58,5 +58,15 @@ class HomePageTest(TestCase):
 
         self.assertIn('item1',response.content.decode())
         self.assertIn('item2', response.content.decode())
+
+class ListViewTest(TestCase):
+    def test_display_all_items(self):
+        Item.objects.create(text='item1')
+        Item.objects.create(text='item2')
+
+        response = self.client.get('/lists/the-only-list/')
+        self.assertContains(response, 'item1')
+        self.assertContains(response, 'item2')
+
 
 # Create your tests here.

@@ -1,4 +1,5 @@
-from django.test import LiveServerTestCase
+# from django.test import LiveServerTestCase
+from django.contrib.staticfiles.testing import StaticLiveServerTestCase
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 import unittest
@@ -6,13 +7,15 @@ import time
 # chromedriver = "D:/Program Files (x86)/Mozilla Firefox/firefox.exe"
 
 
-class NewTest(LiveServerTestCase):
+# class NewTest(LiveServerTestCase):
+class NewVisitorTest(StaticLiveServerTestCase):
 
     def setUp(self):
         self.browser=webdriver.Firefox(firefox_binary="D:/Program Files (x86)/Mozilla Firefox/firefox.exe")
         self.browser.implicitly_wait(3)
 
     def tearDown(self):
+        # self.browser.refresh()
         self.browser.quit()
 
     def check_for_row_in_list_table(self,row_text):
@@ -41,6 +44,13 @@ class NewTest(LiveServerTestCase):
 
 
         self.check_for_row_in_list_table('1:Buy peacock feathers')
+
+        inputbox=self.browser.find_element_by_id('id_new_item')
+        inputbox.send_keys('Buy another feather')
+        inputbox.send_keys(Keys.ENTER)
+        time.sleep(2)
+
+        self.check_for_row_in_list_table('2:Buy another feather')
         # self.assertTrue(
         #     any(row.text=='1: Buy peacock feathers' for row in rows),
         #     "the table text is %s" % table.text

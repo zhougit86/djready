@@ -98,6 +98,18 @@ class NewListTest(TestCase):
 
 # class NewItemTest(TestCase):
 class ListViewTest(TestCase):
+
+    def test_validation_errors_end_up_on_lists_page(self):
+        list_ = List.objects.create()
+        response = self.client.post(
+            '/lists/%d/' % (list_.id,),
+            data={'item_text': ''}
+        )
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'list.html')
+        expected_error = escape("You can't have an empty list item")
+        self.assertContains(response, expected_error)
+
     def test_can_save_a_POST_request_to_an_list(self):
         other_list = List.objects.create()
         correct_list = List.objects.create()

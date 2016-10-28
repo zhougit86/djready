@@ -33,7 +33,7 @@ def view_list(request,list_id):
             item.full_clean()
             item.save()
         # Item.objects.create(text=request.POST['item_text'], list=list_)
-            return redirect('/lists/%d/' % list_.id)
+            return redirect(list_)
         except ValidationError:
             error = "You can't have an empty list item"
     # items=Item.objects.filter(list=list_)
@@ -49,7 +49,7 @@ def new_list(request):
         list_.delete()
         error = "You can't have an empty list item"
         return render(request, 'home.html', {"error": error})
-    return redirect('/lists/%d/' % list_.id)
+    return redirect(list_)      #you have to define the reverse in the model to use this kind of expression
 
 # def add_item(request,list_id):
 #     list_ = List.objects.get(id=list_id)

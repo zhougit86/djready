@@ -6,8 +6,18 @@ from django.utils.html import escape
 
 from records.views import home_page
 from records.models import Item,List
+from records.forms import ItemForm
 
 class HomePageTest(TestCase):
+    maxDiff = None
+
+    def test_home_page_renders_home_temp(self):
+        response=self.client.get('/')
+        self.assertTemplateUsed(response,'home.html')
+
+    def test_home_page_uses_item_form(self):
+        response = self.client.get('/')
+        self.assertIsInstance(response.context['form'], ItemForm)
 
     def test_root_url_resolve(self):
         found=resolve("/")
@@ -16,10 +26,10 @@ class HomePageTest(TestCase):
     def test_home_page_return(self):
         request=HttpRequest()
         response=home_page(request)
-        self.assertTrue(response.content.startswith(b'<html'))
-        self.assertTrue(response.content.endswith(b'</html>'))
-        expected_html = render_to_string('home.html')
-        self.assertTrue(response.content.decode(),expected_html)
+        # self.assertTrue(response.content.startswith(b'<html'))
+        # self.assertTrue(response.content.endswith(b'</html>'))
+        expected_html = render_to_string('home.html',{'form':ItemForm()})    #if error,then add the Item section
+        self.assertMultiLineEqual(response.content.decode(),expected_html)
 
 
     def test_saving_and_retrieving_items(self):
